@@ -186,7 +186,6 @@ callback_type = ctypes.CFUNCTYPE(ctypes.c_int, ctypes.POINTER(RKLLMResult), ctyp
 callback = callback_type(callback_impl)
 
 # Define the RKLLM class, which includes initialization, inference, and release operations for the RKLLM model in the dynamic library
-# Define the RKLLM class, which includes initialization, inference, and release operations for the RKLLM model in the dynamic library
 class RKLLM(object):
     def __init__(self, model_path, lora_model_path = None, prompt_cache_path = None, platform = "rk3588"):
         rkllm_param = RKLLMParam()
@@ -360,33 +359,3 @@ def get_RKLLM_output(rkllm_model, chat_formatted):
 def get_global_state():
     global global_state
     return global_state
-
-if __name__ == "__main__":
-    import threading
-
-    rkllm_model_path = "models/deepseek-r1-1.5b-w8a8-rk3588.rkllm"
-    target_platform = "rk3588"
-    if not os.path.exists(rkllm_model_path):
-        print("Error: Please provide the correct rkllm model path, and ensure it is the absolute path on the board.")
-        sys.stdout.flush()
-        exit()
-
-    # Initialize RKLLM model
-    print("=========init....===========")
-    sys.stdout.flush()
-    model_path = rkllm_model_path
-    rkllm_model = RKLLM(model_path, None, None, target_platform)
-    print("==============================")
-    sys.stdout.flush()
-
-    user_input = "介绍一下你自己"
-
-    result = get_RKLLM_output(rkllm_model, user_input)
-    for r in result:
-        # print(r, end="", flush=True)
-        pass
-
-    print("====================")
-    print("RKLLM model inference completed, releasing RKLLM model resources...")
-    rkllm_model.release()
-    print("====================")
