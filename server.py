@@ -82,11 +82,12 @@ def show_models():
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--rkllm_model_path', type=str, default="models/qwen3-vl-2b-instruct_w8a8_rk3588.rkllm", help='Path of the converted RKLLM model on the Linux board;')
+    parser.add_argument('--rkllm_model_path', type=str, default=f"models/qwen3-vl-2b-instruct_w8a8_rk3588.rkllm", help='Path of the converted RKLLM model on the Linux board;')
     parser.add_argument('--target_platform', type=str, default="rk3588", help='Target platform: e.g., rk3588/rk3576;')
     parser.add_argument('--lora_model_path', type=str, help='Absolute path of the lora_model on the Linux board;')
     parser.add_argument('--prompt_cache_path', type=str, help='Absolute path of the prompt_cache file on the Linux board;')
     parser.add_argument('--port', type=int, default=8080, help='Port that the flask server will listen.')
+    parser.add_argument('--isDocker', type=str, default='n', help='Is running in Docker container: y/n;')
 
     args = parser.parse_args()
 
@@ -94,6 +95,11 @@ if __name__ == "__main__":
         print("Error: Please provide the correct rkllm model path, and ensure it is the absolute path on the board.")
         sys.stdout.flush()
         exit()
+    if args.isDocker.lower() == 'y':
+        rkllm_model_path = "/app/models/" + os.path.basename(args.rkllm_model_path)
+    else:
+        rkllm_model_path = args.rkllm_model_path
+    global_model = rkllm_model_path
 
     if not (args.target_platform in ["rk3588", "rk3576"]):
         print("Error: Please specify the correct target platform: rk3588/rk3576.")
@@ -122,8 +128,7 @@ if __name__ == "__main__":
     # Initialize RKLLM model
     print("=========init....===========")
     sys.stdout.flush()
-    global_model = args.rkllm_model_path
-    rkllm_model = RKLLM(global_model, args.lora_model_path, args.prompt_cache_path, args.target_platform)
+    rkllm_model = RKLLM(rkllm_model_path, args.lora_model_path, args.prompt_cache_path, args.target_platform)
     print("RKLLM Model has been initialized successfully！")
     print("==============================")
     sys.stdout.flush()

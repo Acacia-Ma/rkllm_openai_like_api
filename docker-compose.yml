@@ -1,0 +1,23 @@
+services:
+  rkllm-server:
+    image: dukihiroi/rkllm-server:latest
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      no-cache: true
+    container_name: rkllm-server
+    restart: unless-stopped
+    
+    devices:
+      - /dev/dri/renderD129:/dev/rknpu
+      - /dev/dri/renderD129:/dev/dri/renderD129
+
+    ports:
+      - "8081:8080"
+      
+    volumes:
+      - ./models:/app/models
+      
+    environment:
+      - TARGET_PLATFORM=rk3588
+      - RKLLM_MODEL_PATH=qwen3-vl-2b-instruct_w8a8_rk3588.rkllm
