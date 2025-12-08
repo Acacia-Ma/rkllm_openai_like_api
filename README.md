@@ -9,23 +9,6 @@
 - RK3576 Series
 - RKNPU Driver Version: v0.9.8
 
-
-## Quickstart
-```bash
-docker run -d \
-  --name rkllm-server \
-  --restart unless-stopped \
-  \
-  --device /dev/rknpu \
-  -p 8080:8080 \
-  \
-  -v /home/user/models:/app/models \
-  -e RKLLM_MODEL_PATH=qwen3-vl-2b-instruct_w8a8_rk3588.rkllm \
-  -e TARGET_PLATFORM=rk3588 \
-  \
-  dukihiroi/rkllm-server:latest
-```
-
 ## 使用
 ```bash
 git clone https://github.com/huonwe/rkllm_openai_like_api.git

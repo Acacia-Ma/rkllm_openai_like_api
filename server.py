@@ -98,6 +98,7 @@ if __name__ == "__main__":
         rkllm_model_path = args.rkllm_model_path
 
     if not os.path.exists(rkllm_model_path):
+        print(f"Error: RKLLM model path does not exist: {rkllm_model_path}")
         print("Error: Please provide the correct rkllm model path, and ensure it is the absolute path on the board.")
         sys.stdout.flush()
         exit()

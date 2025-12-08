@@ -18,8 +18,13 @@ WORKDIR /app
 
 # 3. 核心修改：直接从 GitHub 克隆代码
 # 注意：这会拉取 main 分支的最新代码
-RUN git clone https://github.com/huonwe/rkllm_openai_like_api.git .
-
+COPY ./lib /app/lib
+COPY ./rkllm.py /app/rkllm.py
+COPY ./server.py /app/server.py
+COPY ./utils.py /app/utils.py
+COPY ./pyproject.toml /app/pyproject.toml
+COPY ./uv.lock /app/uv.lock
+# RUN mkdir -p /sys/kernel/debug/rknpu
 # 4. 处理动态库
 # 假设 git 仓库里包含 lib/ 目录和 .so 文件
 # 将它们移动到系统库目录并刷新缓存
