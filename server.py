@@ -5,6 +5,7 @@ import resource
 import threading
 import argparse
 import json
+import time
 from flask import Flask, request, jsonify, Response
 from flask_cors import cross_origin
 from utils import apply_chat_template, make_llm_response
@@ -24,11 +25,14 @@ def receive_message():
     # Link global variables to retrieve the output information from the callback function
     # global global_text, global_state
     global is_blocking
-
-    # If the server is in a blocking state, return a specific response.
-    if is_blocking or get_global_state()==0:
-        resp = make_llm_response("⚠ RKLLM Server is Busy! Please try again later. Usually this is because the Web UI frontend is performing tasks such as auto-generating tags, titles, and auto-completion.")
-        return jsonify(resp), 200
+    
+    time_count = 100 # wait for 10 seconds
+    while (is_blocking or get_global_state()==0):
+        time.sleep(0.1)
+        time_count -= 1
+        if time_count <= 0:
+            resp = make_llm_response("⚠ RKLLM Server is Busy! Please try again later. Usually this is because the Web UI frontend is performing tasks such as auto-generating tags, titles, and auto-completion.")
+            return jsonify(resp), 200
     
     lock.acquire()
     try:
@@ -75,7 +79,7 @@ def show_models():
     global global_model
     _model = os.path.basename(global_model)
     info = json.dumps({"object": "list", "data": [{
-        "id": f"{_model}",
+        "id": f"rkllm/{_model}",
         "object": "model",
         "owned_by": "rkllm_server"
     }]})
