@@ -10,6 +10,12 @@
 - RKNPU Driver Version: v0.9.8
 
 ## Quickstart
+使用前先检查rknpu驱动版本
+```bash
+cat /sys/kernel/debug/rknpu/version
+```
+如果没有输出，则说明当前内核不支持rknpu. 建议版本为0.9.8
+
 ```bash
 wget https://raw.githubusercontent.com/huonwe/rkllm_openai_like_api/refs/heads/main/docker-compose.yml
 

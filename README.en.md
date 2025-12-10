@@ -9,6 +9,11 @@ An RKLLM server implementation compatible with the OpenAI API format.
 - RKNPU Driver Version: v0.9.8
 
 ## Quickstart
+Check the rknpu version before using:
+```bash
+cat /sys/kernel/debug/rknpu/version
+```
+If no output, then your linux kernel doesn't support rknpu. It's recommended to be 0.9.8
 ```bash
 wget https://raw.githubusercontent.com/huonwe/rkllm_openai_like_api/refs/heads/main/docker-compose.yml
 
