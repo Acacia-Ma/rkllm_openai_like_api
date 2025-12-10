@@ -73,8 +73,9 @@ def receive_message():
 @cross_origin()
 def show_models():
     global global_model
+    _model = os.path.basename(global_model)
     info = json.dumps({"object": "list", "data": [{
-        "id": f"{global_model}",
+        "id": f"{_model}",
         "object": "model",
         "owned_by": "rkllm_server"
     }]})
