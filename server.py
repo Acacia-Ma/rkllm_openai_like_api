@@ -107,7 +107,6 @@ if __name__ == "__main__":
     parser.add_argument('--isDocker', type=str, default='n', help='Is running in Docker container: y/n;')
 
     args = parser.parse_args()
-
     
     if args.isDocker.lower() == 'y':
         # rkllm_model_path = "/rkllm_server/models/" + args.rkllm_model_path
