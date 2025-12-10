@@ -16,6 +16,21 @@ cat /sys/kernel/debug/rknpu/version
 ```
 如果没有输出，则说明当前内核不支持rknpu. 建议版本为0.9.8
 
+直接使用docker:
+```bash
+docker run -d \
+  --name rkllm-server \
+  --restart unless-stopped \
+  --privileged \
+  -p 8080:8080 \
+  -v /dev:/dev \
+  -v YOUR/PATH/TO/MODELS:/rkllm_server/models \
+  -e TARGET_PLATFORM=rk3588 \
+  -e RKLLM_MODEL_PATH=YOUR_MODEL_FILE_NAME \
+  dukihiroi/rkllm-server:latest
+```
+
+或者使用docker compose:
 ```bash
 wget https://raw.githubusercontent.com/huonwe/rkllm_openai_like_api/refs/heads/main/docker-compose.yml
 
