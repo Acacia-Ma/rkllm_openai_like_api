@@ -11,3 +11,5 @@ wheels/
 
 # LLM model files
 models/*.rkllm
+
+push_dockerhub.sh

@@ -18,7 +18,8 @@ RUN uv sync --frozen --no-dev
 
 # 4. Copy the rest of the application files
 COPY ./lib ./lib
-COPY ./rkllm.py ./server.py ./utils.py ./
+COPY ./api ./api
+COPY ./rkllm.py ./server.py
 
 # 5. Optimize Library Loading: Avoid copying .so files, just point to the directory
 ENV LD_LIBRARY_PATH="/rkllm_server/lib:${LD_LIBRARY_PATH}"
