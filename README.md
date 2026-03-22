@@ -2,12 +2,12 @@
 
 ## Introduction
 
-A lightweight, high-performance API server for Rockchip NPUs (RKLLM), providing drop-in compatibility with **OpenAI API** and **Ollama API** formats. This allows you to seamlessly integrate locally hosted large language models on Rockchip hardware with existing AI tools, frontends, and frameworks.
+A lightweight, high-performance API server for Rockchip NPUs (RKLLM), providing drop-in compatibility with **OpenAI API**, **Claude API** and **Ollama API** formats. This allows you to seamlessly integrate locally hosted large language models on Rockchip hardware with existing AI tools, frontends, and frameworks.
 
 ### Features
 
 * 🚀 **Hardware Optimized:** Leverages Rockchip's NPU for fast inference.
-* 🔄 **Dual API Compatibility:** Supports both standard OpenAI (`/v1/chat/completions`) and Ollama API endpoints.
+* 🔄 **Triple API Compatibility:** Supports both standard OpenAI, Claude and Ollama API endpoints.
 * 🌊 **Real-time Streaming:** Full support for Server-Sent Events (SSE) streaming token output.
 * 🐳 **Docker Ready:** Minimal footprint containerization for easy deployment.
 * 🛠️ **No External Tokenizers:** Operates independently without needing Hugging Face `transformers` or `AutoTokenizer`.
@@ -144,6 +144,7 @@ Once running, the server listens on the configured port (default `8080`).
 | **Server** | `GET /health` | Check server status and NPU availability. |
 | **OpenAI** | `POST /v1/chat/completions` | Standard chat completion (supports `stream: true`). |
 | **OpenAI** | `GET /v1/models` | Returns the currently loaded RKLLM model ID. |
+| **Claude** | `POST /v1/messages` | Anthropic-compatible message completion (supports `stream: true`). |
 | **Ollama** | `POST /api/chat` | Ollama-compatible chat completion. |
 | **Ollama** | `GET /api/tags` | Ollama-compatible model listing. |
 
@@ -170,11 +171,3 @@ Because the NPU handles one inference task at a time, **the server can only proc
 To download pre-converted `.rkllm` models, please refer to the official [Rockchip rknn-llm Model Zoo](https://github.com/airockchip/rknn-llm/tree/main#download).
 
 ---
-
-## 📝 Changelog
-
-* **2026-02-28:** Refactored for FastAPI, added Ollama support, implemented non-blocking hardware locks, and optimized Dockerfile.
-* **2025-12-10:** Added request queueing; requests now wait up to 10s if the RKLLM runtime is busy instead of failing immediately.
-* **2025-12-08:** Adapted to RKLLM v1.2.3. Optimized template logic (defaults to standard ChatML format).
-* **2025-02-11:** Removed dependency on `AutoTokenizer`. An active internet connection to Hugging Face is no longer required to run the server.
-* **2025-02-05:** Implemented `/v1/models`; manual configuration of the Model ID is no longer required.

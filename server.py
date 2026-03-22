@@ -8,15 +8,15 @@ from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 
-from common import hw_lock, global_state
+from api.common import hw_lock, global_state
 from rkllm import RKLLM, get_RKLLM_output
-from utils import apply_chat_template
+from api.utils import apply_chat_template
 
-from api_openai import router as openai_router
-from api_ollama import router as ollama_router
-from api_claude import router as claude_router
+from api.openai import router as openai_router
+from api.ollama import router as ollama_router
+from api.claude import router as claude_router
 
-app = FastAPI(title="RKLLM API Server", description="OpenAI and Ollama Compatible API (Vision & Embeddings)")
+app = FastAPI(title="RKLLM API Server", description="OpenAI, Claude and Ollama Compatible API (Vision & Embeddings)")
 
 app.add_middleware(
     CORSMiddleware,

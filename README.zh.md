@@ -7,7 +7,7 @@
 ### 特性
 
 * 🚀 **硬件优化：** 利用 Rockchip 的 NPU 进行快速推理。
-* 🔄 **双 API 兼容：** 同时支持标准 OpenAI (`/v1/chat/completions`) 和 Ollama API 端点。
+* 🔄 **主流 API 兼容：** 同时支持标准 OpenAI, Claude 和 Ollama API 端点。
 * 🌊 **实时流式传输：** 全面支持服务器发送事件 (SSE) 流式 token 输出。
 * 🐳 **Docker 就绪：** 最小占用的容器化设计，易于部署。
 * 🛠️ **无需外部 Tokenizer：** 独立运行，无需 Hugging Face 的 `transformers` 或 `AutoTokenizer`。
@@ -144,6 +144,7 @@ uv run server.py \
 | **Server** | `GET /health` | 检查服务器状态和 NPU 可用性。 |
 | **OpenAI** | `POST /v1/chat/completions` | 标准聊天补全 (支持 `stream: true`)。 |
 | **OpenAI** | `GET /v1/models` | 返回当前加载的 RKLLM 模型 ID。 |
+| **Claude** | `POST /v1/messages` | 兼容 Anthropic 的消息补全 (支持 `stream: true`)。 |
 | **Ollama** | `POST /api/chat` | 兼容 Ollama 的聊天补全。 |
 | **Ollama** | `GET /api/tags` | 兼容 Ollama 的模型列表。 |
 
@@ -170,11 +171,3 @@ uv run client.py --host http://localhost:8080 --prompt "简要解释一下量子
 要下载预转换的 `.rkllm` 模型，请参考官方的 [Rockchip rknn-llm Model Zoo](https://github.com/airockchip/rknn-llm/tree/main#download)。
 
 ---
-
-## 📝 更新日志
-
-* **2026-02-28:** 使用 FastAPI 重构，增加 Ollama 支持，实现非阻塞硬件锁并优化 Dockerfile。
-* **2025-12-10:** 增加了请求队列；如果 RKLLM 运行时繁忙，请求现在最多等待 10s 而不是立即失败。
-* **2025-12-08:** 适配 RKLLM v1.2.3。优化了模板逻辑 (默认使用标准 ChatML 格式)。
-* **2025-02-11:** 移除了对 `AutoTokenizer` 的依赖。运行服务器不再需要在 Hugging Face 保持活跃互联网连接。
-* **2025-02-05:** 实现了 `/v1/models`；不再需要手动配置模型 ID。

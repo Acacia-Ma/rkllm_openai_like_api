@@ -50,7 +50,7 @@ This is a single-process FastAPI server that wraps Rockchip's RKLLM runtime (NPU
 
 ### Key Files
 
-- **`server.py`** — FastAPI app, all HTTP endpoints, request/response models, startup logic (argument parsing, model load, uvicorn)
+- **`server.py` `api/*.py`** — FastAPI app, all HTTP endpoints, request/response models, startup logic (argument parsing, model load, uvicorn)
 - **`rkllm.py`** — Low-level Python `ctypes` bindings to `lib/librkllmrt.so`. Contains the `RKLLM` class (init/run/abort/release), the C callback (`callback_impl`), and generator functions `get_RKLLM_output` (streaming tokens) and `get_RKLLM_embeddings`
 - **`utils.py`** — `apply_chat_template` (ChatML format builder with vision/multimodal support) and `make_llm_response` (OpenAI response envelope)
 - **`lib/librkllmrt.so`** — Rockchip's closed-source NPU runtime (ARM only, RK3588/RK3576)

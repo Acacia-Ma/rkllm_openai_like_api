@@ -3,8 +3,8 @@ import json
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import JSONResponse, StreamingResponse
 from datetime import datetime, timezone
-from common import ChatRequest, ChatResponse, ResponseMessage, hw_lock, global_state, inject_tool_prompt, parse_model_output
-from utils import apply_chat_template
+from api.common import ChatRequest, ChatResponse, ResponseMessage, hw_lock, global_state, inject_tool_prompt, parse_model_output
+from api.utils import apply_chat_template
 from rkllm import get_RKLLM_output
 
 router = APIRouter()

@@ -4,8 +4,8 @@ import time
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse, StreamingResponse
 from datetime import datetime, timezone
-from common import ChatRequest, EmbeddingRequest, hw_lock, global_state
-from utils import apply_chat_template, make_llm_response
+from api.common import ChatRequest, EmbeddingRequest, hw_lock, global_state
+from api.utils import apply_chat_template, make_llm_response
 from rkllm import get_RKLLM_output, get_RKLLM_embeddings
 
 router = APIRouter()
